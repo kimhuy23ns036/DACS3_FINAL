@@ -36,10 +36,10 @@ fun DatePickerScreen(
 ) {
     val context = LocalContext.current
     // Định dạng ngày khớp với database (chữ thường)
-    val dateFormat = remember { SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()) }
+    val dateFormat = remember { SimpleDateFormat("dd MMM, yyyy", Locale.US) }
     val departureCalendar = remember { Calendar.getInstance() }
     // Khởi tạo departureDate với ngày hiện tại
-    val initialDate = dateFormat.format(departureCalendar.time).toLowerCase(Locale.getDefault())
+    val initialDate = dateFormat.format(departureCalendar.time).toLowerCase(Locale.US)
     var departureDate by remember { mutableStateOf(initialDate) }
 
     // Gọi callback với ngày hiện tại ngay khi khởi tạo
@@ -52,7 +52,7 @@ fun DatePickerScreen(
         modifier = modifier,
         dateText = departureDate, // Luôn hiển thị departureDate
         onDataSelected = { selectedDate ->
-            departureDate = selectedDate.toLowerCase(Locale.getDefault())
+            departureDate = selectedDate.toLowerCase(Locale.US)
             onDepartureSelected(departureDate)
         },
         dateFormat = dateFormat,
@@ -116,7 +116,7 @@ fun showDataPickerDialog(
 
     android.app.DatePickerDialog(context, { _, selectedYear, selectedMonth, selectedDay ->
         calendar.set(selectedYear, selectedMonth, selectedDay)
-        val formattedDate = dateFormat.format(calendar.time).toLowerCase(Locale.getDefault())
+        val formattedDate = dateFormat.format(calendar.time).toLowerCase(Locale.US)
         onDataSelected(formattedDate)
     }, year, month, day).show()
 }
