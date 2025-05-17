@@ -1,6 +1,7 @@
 package com.example.ticketbookingapp.Activities.Admin
 
 import android.content.Intent
+import android.se.omapi.Session
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,7 @@ import com.example.ticketbookingapp.Activities.Auth.LoginActivity
 import com.example.ticketbookingapp.Activities.Dashboard.TopBar
 import com.example.ticketbookingapp.Domain.UserModel
 import com.example.ticketbookingapp.R
+import com.example.ticketbookingapp.Utils.SessionManager
 
 @Composable
 fun AdminDashboardScreen(user: UserModel) {
@@ -119,12 +121,14 @@ fun AdminDashboardScreen(user: UserModel) {
                                 gradientBrush = gradientBackground,
                                 isLoading = isLoading
                             ) {
+                                val sessionManager = SessionManager(context)
+                                sessionManager.logout()
                                 context.startActivity(
                                     LoginActivity.newIntent(context).apply {
                                         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                                     }
                                 )
-                                (context as? ComponentActivity)?.finish()
+                                (context as? ComponentActivity)?.finishAffinity()
                             }
                         }
                     }
